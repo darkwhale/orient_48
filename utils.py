@@ -1,4 +1,5 @@
 import os
+import time
 
 
 # 解析数据库名；
@@ -28,6 +29,6 @@ def transfer(src_folder, dst_folder):
             os.renames(file, os.path.join(dst_folder, os.path.basename(file)))
         except Exception as e:
             print(e)
-            continue
+            os.renames(file, os.path.join(dst_folder, os.path.basename(file) + str(time.time())))
 
 

@@ -14,9 +14,9 @@ port = 12345
 
 
 # 获取新文件夹名；
-def get_new_dir(file_name):
-    return os.path.join('receive', get_database(file_name), file_name[:-4])
-    # return os.path.join('HDATA', str(disk_index), get_database(file_name), file_name[:-4])
+def get_new_dir(file_name, disk_index):
+    # return os.path.join('receive', get_database(file_name), file_name[:-4])
+    return os.path.join('HDATA', str(disk_index), get_database(file_name), file_name[:-4])
 
 
 # 多线程，传输完毕可直接进行清洗；
@@ -40,7 +40,7 @@ def receive_thread(connection):
 
             # todo 生产时替换；
             # 在receive下用时间戳创建新的文件夹，防止命名冲突；
-            file_new_dir = get_new_dir(file_name)
+            file_new_dir = get_new_dir(file_name, disk_index)
 
             if not os.path.exists(file_new_dir):
                 os.makedirs(file_new_dir)
@@ -102,5 +102,5 @@ def receive():
     while True:
         connection, address = sock.accept()
         print("接收地址：", address)
-        thread = threading.Thread(target=receive_thread, args=(connection, ))
+        thread = threading.Thread(target=receive_thread, args=(connection, ), name="accept")
         thread.start()

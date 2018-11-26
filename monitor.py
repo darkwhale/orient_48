@@ -31,13 +31,15 @@ def monitor_data(file, in_monitor, database):
 
         # todo 清洗，入库;待调试；
         merge_dir = process_dir(unzip_dir)
+        make_log("INFO", "清洗完毕：" + file)
 
+        make_log("INFO", "数据入库：" + file)
         hive(os.path.abspath(merge_dir), database)
+        make_log("INFO", "入库完毕：" + file)
 
         # make_log("INFO", "清洗完成：" + file)
 
         delete_mask(file)
-        make_log("INFO", "清洗完毕：" + file)
 
         # 转移文件；
         transfer(merge_dir, os.path.join(os.path.dirname(os.path.dirname(merge_dir)), 'merge'))

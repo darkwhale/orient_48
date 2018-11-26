@@ -91,10 +91,10 @@ def hive(dir, database):
                                                            "rbrcode string, \n" \
                                                            "rbrname string, \n" \
                                                            "rbrtel string, \n" \
-                                                           "rbradd string, \n" \
+                                                           "rbradd string \n" \
                                                            ")row format delimited \n" \
                                                            "fields terminated by ',' \n" \
-                                                           "lines terminated by '\\n' " \
+                                                           "lines terminated by '\\n' \n" \
                                                            "stored as textfile "
 
     load_data_sql = "load data local inpath '" + dir + "' into table src_" + table_name
@@ -117,7 +117,7 @@ def hive(dir, database):
              )
 
     # todo 待验证；
-    hive_command = "hive -f " + hive_file_path
+    hive_command = ["hive", "-f", hive_file_path]
 
     return subprocess.check_output(hive_command,)
 
